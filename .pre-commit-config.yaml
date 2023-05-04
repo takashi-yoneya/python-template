@@ -1,0 +1,51 @@
+# pre-commitの設定ファイル
+repos:
+  # ruffのチェック
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.264"
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  # ruffで未対応の部分をblackで補完する
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args: [src/]
+
+  # mypyのチェック
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.2.0
+    hooks:
+      - id: mypy
+        exclude: ^tests/|^any-path/ # mypyの除外ディレクトリ。正規表現で記述できる
+        additional_dependencies: [pydantic, types-PyYAML==6.0.7]
+
+  # 全般的なチェック
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace     # 行末の空白を削除する
+      - id: end-of-file-fixer       # ファイルの最後に改行を追加する
+      - id: check-yaml              # yamlの構文チェック
+      - id: check-added-large-files # 大きなファイルがコミットされないようにする
+
+  # poetryのlockファイルの出力やrequirements.txtの出力を行う
+  - repo: https://github.com/python-poetry/poetry
+    rev: "1.4.0"
+    hooks:
+      - id: poetry-check
+      - id: poetry-lock
+      - id: poetry-export
+        args: ["-f", "requirements.txt", "-o", "requirements.txt"]
+      - id: poetry-export # dev用のrequirements.txtを出力する
+        args:
+          [
+            "--with",
+            "dev",
+            "-f",
+            "requirements.txt",
+            "-o",
+            "requirements-dev.txt",
+          ]

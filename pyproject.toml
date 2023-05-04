@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "python-structure"
+version = "0.1.0"
+description = ""
+authors = ["yoneya.takashi <takashi002013@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ruff = "^0.0.264"
+mypy = "^1.2.0"
+pydantic = "^1.10.7"
+black = "^23.3.0"
+
+[tool.ruff]
+target-version = "py310"
+src = ["src", "tests"]
+select = ["ALL"]
+exclude = [".venv"]
+ignore = [
+    "G004", # `logging-f-string`
+    "PLC1901", # compare-to-empty-string
+    "PLR2004", # magic-value-comparison
+    "ANN101", # missing-type-self
+    "ANN102", # missing-type-cls
+    "ANN002", # missing-type-args
+    "ANN003", # missing-type-kwargs
+    "ANN401", # any-type
+    "ERA", # commented-out-code
+    "ARG002", # unused-method-argument
+    "INP001", # implicit-namespace-package
+    "PGH004", # blanket-noqa
+    "B008", # Dependsで使用するため
+    "A002", # builtin-argument-shadowing
+    "A003", # builtin-attribute-shadowing
+    "PLR0913", # too-many-arguments
+    "RSE", # flake8-raise
+    "D", # pydocstyle
+    "C90", # mccabe
+    "T20", # flake8-print
+    "SLF", #  flake8-self
+    "BLE", # flake8-blind-except
+    "FBT", # flake8-boolean-trap
+    "TRY", # tryceratops
+    "COM", # flake8-commas
+    "S", # flake8-bandit
+    "EM",#flake8-errmsg
+    "EXE", # flake8-executable
+    "ICN", # flake8-import-conventions
+    "RET",#flake8-return
+    "SIM",#flake8-simplify
+    "TCH", # flake8-type-checking
+    "PTH", #pathlibを使わないコードが多いので、除外する
+    "ISC", #flake8-implicit-str-concat
+    "N", # pep8-naming
+    "PT", # flake8-pytest-style
+]
+line-length = 120
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
