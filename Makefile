@@ -4,6 +4,7 @@
 .PHONY: install
 install:
 	pyenv install 3.10
+	pyenv local 3.10
 	poetry env use 3.10
 	poetry install
 	pre-commit install
